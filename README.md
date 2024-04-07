@@ -1,0 +1,1 @@
+Node, Nodemon & Express, mongodb installed
