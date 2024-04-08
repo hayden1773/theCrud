@@ -2,27 +2,29 @@
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
-app.use(express.json());
 const Product = require('./models/product.models.js');
 
+//middleware
+app.use(express.json());
+app.use(express.urlencoded({extended: false}))
 // Moved server run to after connection
+
+
+// routes
+app.use('/api/products', productRoute)
+
+
+
 
 
 app.get('/', (req, res) => {
     res.send('Hello from Node API')
 });
 
-app.get('/api/products', async (req, res) => {
 
-    try {
-        const products = await Product.find({});
-        res.status(200).json(products);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-});
 
-app.get('/api/product/:id', async (req, res) => {
+
+app.get('/api/products/:id', async (req, res) => {
 
     try {
         const { id } = req.params;
@@ -48,7 +50,7 @@ app.post('/api/products', async (req, res) => {
 
 //update a product
 
-app.put('/api/product/:id', async (req, res) => {
+app.put('/api/products/:id', async (req, res) => {
 
     try {
         const { id } = req.params;
@@ -66,7 +68,7 @@ app.put('/api/product/:id', async (req, res) => {
 
 //delete a product
 
-app.delete('/api/product/:id', async (req, res) => {
+app.delete('/api/products/:id', async (req, res) => {
 
     try {
         const { id } = req.params;
